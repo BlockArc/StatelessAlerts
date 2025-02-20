@@ -1,0 +1,29 @@
+name: Rust CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🦀 Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: 💾 Cache Cargo Dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: 🏗️ Build Project
+        run: cargo build --release
+
+      - name: ✅ Run Tests
+        run: cargo test --verbose
